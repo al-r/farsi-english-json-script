@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Farsi-English JSON Script - API Documentation</title>
+        <meta charset="UTF-8">
+        <link href="style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <header>
+            <h1>Farsi-English JSON Script</h1>
+        </header>
+        <main>
+            <h2>API Documentation</h2>
+            <p>This API is to be used on Farsi and English programme scripts. It will help you to format JSON array of strings to JSON array of objects combining Farsi and English transcripts. And it will convert other file formats to a JSON so they can then be formatted into JSON objects.</p>
+            <p>This is a free API built in Node JS.</p>
+
+            <section>
+                <h3>Conversion to JSON Array</h3>
+                <p>Convert Farsi and English scripts from Non-JSON formats to a JSON array.</p>
+                <ul>
+                    <li>Currently supported formats for conversion: <i>.rtf</i></li>
+                    <li>Endpoint: <i>/convert/array</i></li>
+                </ul>
+                <h4>POST method</h4>
+                <p>In order to get an RTF script converted to JSON, you will need to use a POST method on the endpoint.</p>
+                <code>
+                    <p>
+                        const rtfFile = "<br/>
+                        \b \cf6 OOV: <br/>
+                        \b0 Yes<br/>
+                        \<br/>
+                        \pard\pardeftab720\ri0\sl276\slmult1\rtlpar\qr\partightenfactor0<br/>
+                        \cf6 \uc0\u1576 \u1604 \u1607  \<br/>
+                        \<br/>
+                        <br/>
+                        \b \cf6 DAVE: \'93Yes\'94\<br/>
+                        \<br/>
+                        \pard\pardeftab720\ri0\sl276\slmult1\rtlpar\qr\partightenfactor0<br/>
+                        \cf6 \uc0\u1576 \u1604 \u1607  \<br/>
+                        \"
+                    </p>
+
+                    <p>POST http://localhost:8080/convert/array</p>
+
+                    <p>input = {format: "rtf", file: rtfFile}</p>
+
+                    <p>output = ["OOV:", "Yes", "بله", "DAVE:", " 'Yes'", "بله"]</p>
+                </code>
+            </section>
+
+            <section>
+                <h3>Conversion to JSON Object</h3>
+                <p>Convert Farsi and English scripts from Non-JSON formats to a JSON object.</p>
+                <ul>
+                    <li>Currently supported formats for conversion: <i>.rtf</i></li>
+                    <li>Endpoint: <i>/convert/object</i></li>
+                </ul>
+                <h4>POST method</h4>
+                <p>In order to get an RTF script converted to JSON, you will need to use a POST method on the endpoint.</p>
+                <code>
+                    <p>
+                        const rtfFile = "<br/>
+                        \b \cf6 OOV: <br/>
+                        \b0 Yes<br/>
+                        \<br/>
+                        \pard\pardeftab720\ri0\sl276\slmult1\rtlpar\qr\partightenfactor0<br/>
+                        \cf6 \uc0\u1576 \u1604 \u1607  \<br/>
+                        \<br/>
+                        <br/>
+                        \b \cf6 DAVE: \'93Yes\'94\<br/>
+                        \<br/>
+                        \pard\pardeftab720\ri0\sl276\slmult1\rtlpar\qr\partightenfactor0<br/>
+                        \cf6 \uc0\u1576 \u1604 \u1607  \<br/>
+                        \"
+                    </p>
+
+                    <p>POST http://localhost:8080/convert/object</p>
+
+                    <p>input = {format: "rtf", file: rtfFile}</p>
+
+                    <p>
+                        output = {<br/>
+                        &nbsp; "title": "Script",<br/>
+                        &nbsp; "scripts": [<br/>
+                        &nbsp; &nbsp; {"meta": "OOV", "english": "Yes", "farsi": "بله"},<br/>
+                        &nbsp; &nbsp; {"meta": "DAVE", "english": " 'Yes'","farsi": "بله"}<br/>
+                        &nbsp; ]<br/>
+                        }
+                    </p>
+                </code>
+            </section>
+
+            <section>
+                <h3>Format</h3>
+                <p>Format Farsi and English scripts from an JSON array of strings to a JSON object.</p>
+                <ul>
+                    <li>Endpoint: <i>/format</i></li>
+                </ul>
+                <h4>POST method</h4>
+                <p>This endpoint will convert your JSON array of string into a JSON object putting in parallele both languages.</p>
+                <code>
+                    <p>POST http://localhost:8080/format</p>
+                    
+                    <p>
+                        input = {file: ["OOV:", "Yes", "بله", "PIX- Dave using the app","DAVE: 'Yes'", "بله"]}
+                    </p>
+                    
+                    <p>
+                        output = {<br/>
+                        &nbsp; "title": "Script",<br/>
+                        &nbsp; "scripts": [<br/>
+                        &nbsp; &nbsp; {"meta": "OOV", "english": "Yes", "farsi": "بله"},<br/>
+                        &nbsp; &nbsp; {meta: "PIX- Dave using the app"},<br/>
+                        &nbsp; &nbsp; {"meta": "DAVE", "english": "Yes","farsi": "بله"}<br/>
+                        &nbsp; ]<br/>
+                        }
+                    </p>
+                </code>
+            </section>
+        </main>
+    </body>
+</html>
